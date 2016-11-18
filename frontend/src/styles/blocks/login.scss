@@ -1,0 +1,71 @@
+.header-vk {
+  background-color: $base-color;
+  padding: 10px 0 10px 40px;
+}
+
+.login-article {
+  padding-top: 120px;
+
+  .text-login {
+    font-weight: bold;
+    margin-top: 0;
+  }
+}
+
+.img-login {
+  display: block;
+  margin: auto;
+}
+
+.control-article {
+  margin: 0 auto;
+  overflow: hidden;
+  padding-top: 30px;
+  width: 296px;
+
+  .btn-sign-up {
+    background-color: $base-color;
+    border: 0;
+    border-radius: 3px;
+    color: $white;
+    display: inline-block;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    outline: none;
+    padding: 6px 17px;
+    width: 138px;
+
+    &:hover,
+    &focus {
+      background-color: $button-hover;
+    }
+  }
+
+  .btn-sign-up-reg {
+    margin-left: 20px;
+  }
+
+  .text-btn-link {
+    color: $white;
+    text-decoration: none;
+  }
+}
+
+.link-logout {
+  color: $white;
+  cursor: pointer;
+  display: inline-block;
+  float: right;
+  font-size: 16px;
+  margin-right: 20px;
+  margin-top: 7px;
+  text-decoration: none;
+
+  &:hover,
+  &:visited,
+  &:active,
+  &:focus {
+    color: $white;
+    text-decoration: none;
+  }
+}

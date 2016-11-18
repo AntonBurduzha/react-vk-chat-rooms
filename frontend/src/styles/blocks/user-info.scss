@@ -1,0 +1,30 @@
+.container-user-info {
+  background-color: $child-color;
+  padding-top: 10px;
+}
+
+.article-user-info {
+  @extend %clearfix;
+  background-color: $white;
+  padding: 10px;
+  width: 100%;
+
+  .img-user-info {
+    display: inline-block;
+    float: left;
+    height: auto;
+    width: 100px;
+  }
+
+  .text-user-info {
+    display: inline-block;
+    font-size: 22px;
+    margin-bottom: 0;
+    margin-left: 17px;
+  }
+
+  .text-user-info-name {
+    display: block;
+    margin-left: 40%;
+  }
+}
