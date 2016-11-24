@@ -1,7 +1,7 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {Link} from 'react-router'
 
-export default class App extends React.Component {
+export default class MainLayout extends Component {
   constructor(){
     super();
     this.logout.bind(this);
@@ -14,7 +14,7 @@ export default class App extends React.Component {
       <div>
         <div className="header-vk">
           <a href="https://vk.com">
-            <img src="../img/vk_logo.jpg" alt="vk_logo"/>
+            <img src="/../img/vk_logo.jpg" alt="vk_logo"/>
           </a>
           <Link to="/" className="link-logout" onClick={this.logout}>Выйти</Link>
         </div>

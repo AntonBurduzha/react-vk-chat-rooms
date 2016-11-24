@@ -1,15 +1,15 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var sassLint = require('gulp-sass-lint');
-var postcss = require('gulp-postcss');
-var autoprefixer = require('autoprefixer');
-var browserSync = require('browser-sync');
-var bsReload = require('browser-sync').reload;
-var eslint = require('gulp-eslint');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var babelify = require('babelify');
-var nodemon = require('gulp-nodemon');
+const gulp = require('gulp');
+const sass = require('gulp-sass');
+const sassLint = require('gulp-sass-lint');
+const postcss = require('gulp-postcss');
+const autoprefixer = require('autoprefixer');
+const browserSync = require('browser-sync');
+const bsReload = require('browser-sync').reload;
+const eslint = require('gulp-eslint');
+const browserify = require('browserify');
+const source = require('vinyl-source-stream');
+const babelify = require('babelify');
+const nodemon = require('gulp-nodemon');
 
 gulp.task('script', function() {
   return browserify('./frontend/src/scripts/script.js')
@@ -22,7 +22,7 @@ gulp.task('script', function() {
 });
 
 gulp.task('nodemon', function (cb) {
-  var started = false;
+  let started = false;
   return nodemon({
     script: './backend/bin/www.js',
     ignore: [
@@ -41,7 +41,7 @@ gulp.task('browser-sync', ['nodemon'], function (){
   browserSync.init({
     proxy: "localhost:3000",
     files: ["./frontend/dist/**"],
-    port: '1408',
+    port: 1408,
     notify: true
   });
 });

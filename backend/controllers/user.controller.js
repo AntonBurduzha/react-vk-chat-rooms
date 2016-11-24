@@ -1,9 +1,20 @@
-var express = require('express');
-var router = express.Router();
-var loginService = require('../services/login.service');
+const express = require('express');
+const router = express.Router();
+const loginService = require('../services/login.service');
 
 router.post('/', createUser);
+router.get('/chatlist', getChatList);
 router.get('/:id', getUserInfo);
+
+function getChatList(req, res) {
+  loginService.getChatList(req).then((response) => {
+    if (response || response === 0) {
+      res.json(response);
+    } else {
+      res.sendStatus(404);
+    }
+  });
+}
 
 function createUser(req, res) {
   const result = loginService.createUser(req);

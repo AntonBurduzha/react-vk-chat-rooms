@@ -1,0 +1,36 @@
+.article-user-service {
+  background-color: $white;
+  padding: 5px;
+  width: 100%;
+
+  .list-user-service {
+    list-style-type: none;
+    padding: 0;
+
+    .item-user-service {
+      text-align: center;
+    }
+
+    .link-user-service {
+      color: $black;
+      display: block;
+      font-size: 17px;
+      height: 40px;
+      padding-top: 8px;
+
+      &:hover,
+      &:focus {
+        background-color: $child-color;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.divider-user-service {
+  height: 20px;
+}
+
+.item-selected {
+  background-color: $child-color;
+}

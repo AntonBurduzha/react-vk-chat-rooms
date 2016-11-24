@@ -1,12 +1,26 @@
-let loginService = {};
+const loginService = {};
 
 loginService.createUser = createUser;
 loginService.getUserData = getUserData;
+loginService.getChatList = getChatList;
 
 module.exports = loginService;
 
+function getChatList(req) {
+  const db = req.db;
+  let collection = db.get('chatroom');
+  let chatlist = {};
+  return new Promise((resolve, reject) => {
+    collection.find({}, (err, chatRoomList) => {
+      if(err) throw err;
+      chatlist.chatRoomList = chatRoomList;
+      resolve(chatlist);
+    });
+  });
+}
+
 function getUserData(req) {
-  let db = req.db;
+  const db = req.db;
   let collection = db.get('users');
   let userdata = {};
   return new Promise((resolve, reject) => {
@@ -20,7 +34,7 @@ function getUserData(req) {
 
 
 function createUser(req) {
-  var db = req.db;
+  const db = req.db;
   var collection = db.get('users');
   var userdata = {
     id: req.body.id,

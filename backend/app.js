@@ -1,14 +1,14 @@
-var express = require('express');
-var path = require('path');
-var bodyParser = require("body-parser");
+const express = require('express');
+const path = require('path');
+const bodyParser = require("body-parser");
 
-var config = require('./config.json');
-var monk = require('monk');
-var db = monk(config.db);
+const config = require('./config.json');
+const monk = require('monk');
+const db = monk(config.db);
 
-var loginControl = require('./controllers/user.controller');
+const loginControl = require('./controllers/user.controller');
 
-var app = express();
+const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
