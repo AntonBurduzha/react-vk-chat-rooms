@@ -40,6 +40,7 @@ function createUser(req) {
     id: req.body.id,
     first_name: req.body.first_name,
     last_name: req.body.last_name,
+    domain: req.body.domain,
     photo_50: req.body.photo_50,
     photo_200: req.body.photo_200
   };

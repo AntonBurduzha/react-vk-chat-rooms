@@ -1,7 +1,9 @@
 import React, {Component} from 'react'
 import UserServiceView from '../views/view.user.service'
+import store from '../../store'
+import {connect} from 'react-redux'
 
-export default class UserServiceController extends Component {
+class UserServiceController extends Component {
   constructor() {
     super();
     this.selectMenuItem = this.selectMenuItem.bind(this);
@@ -50,3 +52,10 @@ export default class UserServiceController extends Component {
   }
 }
 
+const mapStateToProps = function(state) {
+  return {
+    userData: state.loginState
+  };
+};
+
+export default connect(mapStateToProps)(UserServiceController);

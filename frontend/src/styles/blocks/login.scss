@@ -69,3 +69,17 @@
     text-decoration: none;
   }
 }
+
+.loading-strip {
+  background-color: $base-color;
+  bottom: 0;
+  height: 10px;
+  left: 0;
+  position: absolute;
+  width: 0;
+}
+
+@keyframes strip-progress {
+  0%   {width: 0;}
+  100% {width: 100%;}
+}

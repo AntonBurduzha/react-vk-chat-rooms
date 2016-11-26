@@ -16,13 +16,12 @@ export default class LoginPageView extends React.Component {
           </div>
         </div>
         <div className="row control-article">
-          <button className="btn-sign-up" onClick={this.props.signUp}>
-            <Link to="/userpage" className="text-btn-link">Войти</Link>
-          </button>
+          <button className="btn-sign-up" onClick={this.props.signUp}>Войти</button>
           <button className="btn-sign-up btn-sign-up-reg">
             <a className="text-btn-link" href="https://vk.com/login">Регистрация Vk</a>
           </button>
         </div>
+        <div className="loading-strip"></div>
       </div>
     );
   }

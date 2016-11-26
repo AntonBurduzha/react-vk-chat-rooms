@@ -1,14 +1,20 @@
 import React, {Component} from 'react'
 import LoginPageView from '../views/view.login.page'
+import loginApi from '../../api/login.api'
+import {connect} from 'react-redux'
+import store from '../../store'
+import setVkUserData from '../../actions/login.actions'
+import {browserHistory} from 'react-router'
 
-export default class LoginPageController extends Component {
+class LoginPageController extends Component {
   constructor(props){
     super(props);
     this.signUp = this.signUp.bind(this);
+    this.applyLoadingStrip = this.applyLoadingStrip.bind(this);
     this.state = {'userId': ''};
   }
 
-  componentWillMount(){
+  componentDidMount(){
     let self = this;
     let userId = '';
     VK.init({
@@ -18,44 +24,41 @@ export default class LoginPageController extends Component {
       if (res.session) {
         userId = res.session.user['id'];
         self.setState({userId: userId});
-
-        fetch(`/userdata/${userId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
+        loginApi.getUserData(self.state.userId).then(result => {
+          if(result.userInfo !== null){
+            localStorage.setItem('user', result.userInfo.id);
+            store.dispatch(setVkUserData(result.userInfo));
           }
-        }).then(response => {
-          response.json().then(result => {
-            if(result.userInfo !== null){
-              localStorage.setItem('user', result.userInfo.id);
-            }
-          });
         });
       }
     });
+  }
+
+  applyLoadingStrip(){
+    let loadingStrip = document.querySelector('.loading-strip');
+    loadingStrip.style.animation = 'strip-progress .8s';
   }
 
   signUp() {
     let self = this;
     var accessToken = localStorage.getItem('user');
     if(self.state.userId === accessToken) {
-      return true;
+      self.applyLoadingStrip();
+      setTimeout(() => browserHistory.push('/userpage'), 800);
     }
     else {
-      VK.Api.call('users.get', {uids: self.state.userId, fields: 'photo_50,photo_200_orig'}, (obj) => {
+      VK.Api.call('users.get', {uids: self.state.userId, fields: 'domain,photo_50,photo_200_orig'}, (obj) => {
         if(obj.response) {
-          let {first_name, last_name, photo_50, photo_200_orig} = obj.response[0];
-          let params = `id=${self.state.userId}&first_name=${first_name}&last_name=${last_name}&photo_50=${photo_50}&photo_200=${photo_200_orig}`;
+          const userInfo = Object.assign({id: self.state.userId}, obj.response[0]);
+          userInfo.domain = `https://vk.com/${userInfo.domain}`;
 
-          fetch('/userdata', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: params
-          });
+          const params = `id=${self.state.userId}&first_name=${userInfo.first_name}&last_name=${userInfo.last_name}&domain=${userInfo.domain}&photo_50=${userInfo.photo_50}&photo_200=${userInfo.photo_200_orig}`;
+          loginApi.postUserData(params);
+          localStorage.setItem('user', self.state.userId);
+          store.dispatch(setVkUserData(userInfo));
+          self.applyLoadingStrip();
+          setTimeout(() => browserHistory.push('/userpage'), 800);
         }
-        localStorage.setItem('user', self.state.userId);
       });
     }
   }
@@ -68,3 +71,11 @@ export default class LoginPageController extends Component {
     )
   }
 }
+
+const mapStateToProps = function(state) {
+  return {
+    userData: state.loginState
+  };
+};
+
+export default connect(mapStateToProps)(LoginPageController);
