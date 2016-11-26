@@ -1,5 +1,7 @@
 const loginReducer = (state = {}, action) => {
   switch(action.type){
+    case 'SET_VK_USER_ID':
+      return action.payload;
     case 'SET_VK_USER_DATA':
       return Object.assign({}, state, action.payload);
     default:

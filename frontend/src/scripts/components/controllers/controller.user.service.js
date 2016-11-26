@@ -2,35 +2,20 @@ import React, {Component} from 'react'
 import UserServiceView from '../views/view.user.service'
 import store from '../../store'
 import {connect} from 'react-redux'
+import loginApi from '../../api/login.api'
+import loginActions from '../../actions/login.actions'
 
 class UserServiceController extends Component {
   constructor() {
     super();
     this.selectMenuItem = this.selectMenuItem.bind(this);
-    this.state = {
-      userInfo: [{
-        'id': '',
-        'first_name': '',
-        'last_name': '',
-        'photo_50': '',
-        'photo_200': ''
-      }]
-    };
   }
 
   componentDidMount() {
-    let self = this;
     let userId = localStorage.getItem('user');
 
-    fetch(`/userdata/${userId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => {
-      response.json().then(userdata => {
-        self.setState(userdata)
-      });
+    loginApi.getUserData(userId).then(userdata => {
+      store.dispatch(loginActions.setVkUserData(userdata.userInfo));
     });
   }
 
@@ -44,9 +29,9 @@ class UserServiceController extends Component {
 
   render() {
     return (
-      <UserServiceView first_name={this.state.userInfo.first_name}
-                       last_name={this.state.userInfo.last_name}
-                       photo_200={this.state.userInfo.photo_200}
+      <UserServiceView first_name={this.props.userData.first_name}
+                       last_name={this.props.userData.last_name}
+                       photo_200={this.props.userData.photo_200}
                        selectMenuItem={this.selectMenuItem}/>
     )
   }

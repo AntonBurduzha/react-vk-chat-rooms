@@ -2,9 +2,9 @@ import React, {Component} from 'react'
 import LoginPageView from '../views/view.login.page'
 import loginApi from '../../api/login.api'
 import {connect} from 'react-redux'
-import store from '../../store'
-import setVkUserData from '../../actions/login.actions'
 import {browserHistory} from 'react-router'
+import loginActions from '../../actions/login.actions'
+import store from '../../store'
 
 class LoginPageController extends Component {
   constructor(props){
@@ -23,11 +23,10 @@ class LoginPageController extends Component {
     VK.Auth.login((res) => {
       if (res.session) {
         userId = res.session.user['id'];
-        self.setState({userId: userId});
-        loginApi.getUserData(self.state.userId).then(result => {
+        store.dispatch(loginActions.setVkUserId(userId));
+        loginApi.getUserData(userId).then(result => {
           if(result.userInfo !== null){
             localStorage.setItem('user', result.userInfo.id);
-            store.dispatch(setVkUserData(result.userInfo));
           }
         });
       }
@@ -42,20 +41,19 @@ class LoginPageController extends Component {
   signUp() {
     let self = this;
     var accessToken = localStorage.getItem('user');
-    if(self.state.userId === accessToken) {
+    if(this.props.userId === accessToken) {
       self.applyLoadingStrip();
       setTimeout(() => browserHistory.push('/userpage'), 800);
     }
     else {
-      VK.Api.call('users.get', {uids: self.state.userId, fields: 'domain,photo_50,photo_200_orig'}, (obj) => {
+      VK.Api.call('users.get', {uids: this.props.userId, fields: 'domain,photo_50,photo_200_orig'}, (obj) => {
         if(obj.response) {
-          const userInfo = Object.assign({id: self.state.userId}, obj.response[0]);
+          const userInfo = Object.assign({id: this.props.userId}, obj.response[0]);
           userInfo.domain = `https://vk.com/${userInfo.domain}`;
 
-          const params = `id=${self.state.userId}&first_name=${userInfo.first_name}&last_name=${userInfo.last_name}&domain=${userInfo.domain}&photo_50=${userInfo.photo_50}&photo_200=${userInfo.photo_200_orig}`;
+          const params = `id=${this.props.userId}&first_name=${userInfo.first_name}&last_name=${userInfo.last_name}&domain=${userInfo.domain}&photo_50=${userInfo.photo_50}&photo_200=${userInfo.photo_200_orig}`;
           loginApi.postUserData(params);
-          localStorage.setItem('user', self.state.userId);
-          store.dispatch(setVkUserData(userInfo));
+          localStorage.setItem('user', this.props.userId);
           self.applyLoadingStrip();
           setTimeout(() => browserHistory.push('/userpage'), 800);
         }
@@ -74,7 +72,7 @@ class LoginPageController extends Component {
 
 const mapStateToProps = function(state) {
   return {
-    userData: state.loginState
+    userId: state.loginState
   };
 };
 

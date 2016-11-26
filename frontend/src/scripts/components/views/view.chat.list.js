@@ -7,7 +7,7 @@ export default class ChatListView extends Component {
     return (
       <div className="col-md-6">
         <h2 className="title-chatrooms-list">Список чатов: </h2>
-        {this.props.chatRoomList.map(function (chatRoom) {
+        {this.props.chatListData.map(function (chatRoom) {
           return(
             <div key={chatRoom.id} className="article-chatroom">
               <img className="img-chatroom-list" src={chatRoom.logo} alt="marvel"/>

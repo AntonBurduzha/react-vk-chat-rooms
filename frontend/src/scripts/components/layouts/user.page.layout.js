@@ -8,9 +8,9 @@ export default class UserPageLayout extends Component {
   }
 
   setUserPageHeigth(){
-    let userInfoComponent = document.querySelectorAll('.container-user-page');
+    let userServiceComponent = document.querySelectorAll('.container-user-page');
     let headerVK = document.querySelector('.header-vk');
-    userInfoComponent.forEach((item) => {
+    userServiceComponent.forEach((item) => {
       item.style.height = document.documentElement.clientHeight - headerVK.offsetHeight - 20 + 'px';
     });
   }
