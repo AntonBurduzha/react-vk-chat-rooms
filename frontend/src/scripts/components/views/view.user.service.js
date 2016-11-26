@@ -21,7 +21,7 @@ export default class UserServiceView extends Component {
             </li>
             <li className="item-user-service">
               <Link
-                to="/userpage"
+                to="/userpage/my_chats"
                 className="link-user-service"
                 onClick={this.props.selectMenuItem}>Мои чаты</Link>
             </li>
