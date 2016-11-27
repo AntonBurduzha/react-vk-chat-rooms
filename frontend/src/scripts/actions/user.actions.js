@@ -7,6 +7,14 @@ const getDefaultChatList = (chatListData) => {
   };
 };
 
+const getSearchedChatList = (chatListData) => {
+  return {
+    type: AppActionTypes.GET_SERCHED_CHAT_LIST,
+    chatListData
+  };
+};
+
 export {
-  getDefaultChatList
+  getDefaultChatList,
+  getSearchedChatList
 };

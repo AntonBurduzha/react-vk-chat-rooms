@@ -1,0 +1,32 @@
+.article-search {
+  border-bottom: 1px solid $child-color;
+  padding-bottom: 15px;
+
+  .input-search {
+    border: 1px solid $base-color;
+    border-radius: 5px;
+    height: 32px;
+    display: block;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    width: 100%;
+  }
+
+  .btn-search {
+    background-color: $base-color;
+    border: 0;
+    border-radius: 3px;
+    color: $white;
+    display: block;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    outline: none;
+    padding: 6px 17px;
+    width: 138px;
+
+    &:hover,
+    &focus {
+      background-color: $button-hover;
+    }
+  }
+}

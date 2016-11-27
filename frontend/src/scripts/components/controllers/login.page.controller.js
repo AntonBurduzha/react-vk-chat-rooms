@@ -44,9 +44,9 @@ class LoginPageController extends Component {
         if(obj.response) {
           const userInfo = Object.assign({id: this.props.userId}, obj.response[0]);
           userInfo.domain = `https://vk.com/${userInfo.domain}`;
-
-          const params = `id=${this.props.userId}&first_name=${userInfo.first_name}&last_name=${userInfo.last_name}&domain=${userInfo.domain}&photo_50=${userInfo.photo_50}&photo_200=${userInfo.photo_200_orig}`;
-          loginApi.postUserData(params);
+          const paramsFirstPart = `id=${this.props.userId}&first_name=${userInfo.first_name}&last_name=${userInfo.last_name}`;
+          const paramsLastPart = `&domain=${userInfo.domain}&photo_50=${userInfo.photo_50}&photo_200=${userInfo.photo_200_orig}`;
+          loginApi.postUserData(paramsFirstPart + paramsLastPart);
           localStorage.setItem('user', this.props.userId);
           self.applyLoadingStrip();
           setTimeout(() => browserHistory.push('/userpage'), 800);
