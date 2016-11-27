@@ -1,14 +1,10 @@
 import React, {Component} from 'react'
-import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
-import store from '../../store'
 import userApi from '../../api/user.api'
 import { applyLoadingStrip } from '../../api/common.api'
-import { getDefaultChatList } from '../../actions/user.actions'
-import { getSearchedChatList } from '../../actions/user.actions'
 import SearchView from '../views/search.view'
 
-class SearchController extends Component {
+export default class SearchContainer extends Component {
   constructor(props){
     super(props);
     this.getInputedChatNames = this.getInputedChatNames.bind(this);
@@ -16,7 +12,8 @@ class SearchController extends Component {
     this.getCurrentChat = this.getCurrentChat.bind(this);
     this.state = {
       'inputedChats': '',
-      'chatListLoaded': false
+      'chatListLoaded': false,
+      searchedChatData: []
     };
   }
 
@@ -24,28 +21,19 @@ class SearchController extends Component {
     this.setState({'inputedChats': event.target.value});
   }
 
-  componentDidMount(){
-    userApi.getChatList().then(chatlist => {
-      store.dispatch(getDefaultChatList(chatlist.chatRoomList));
-    });
-  }
-
   getSearchedChatList(){
     let self = this;
-    let searchedChatList = [];
-    this.props.chatListData.forEach(chatItem => {
-      let searchedChat = self.state.inputedChats.toLowerCase();
-      if(chatItem.name.toLowerCase().indexOf(searchedChat) !== -1 && searchedChat.length !== 0){
-        searchedChatList.push(chatItem);
-      }
+    this.state.inputedChats.length > 0 ? this.setState({'chatListLoaded': true}) : this.setState({'chatListLoaded': false});
+    let inputedChatName = self.state.inputedChats.toLowerCase();
+    userApi.getSearchedChatList(inputedChatName).then(chatlist => {
+      self.setState({searchedChatData: chatlist});
     });
-    store.dispatch(getSearchedChatList(searchedChatList));
-    this.state.inputedChats.length > 0 ? this.setState({'chatListLoaded': true}) : this.setState({'chatListLoaded': false})
   }
 
   getCurrentChat(event){
     let chatName = event.target.textContent;
-    this.props.chatListData.forEach((chatRoom) => {
+    console.log(this.state.chatListData);
+    this.state.searchedChatData.forEach((chatRoom) => {
       if(chatName === chatRoom.name) {
         localStorage.setItem('currentChat', chatName);
         applyLoadingStrip();
@@ -59,18 +47,9 @@ class SearchController extends Component {
       <SearchView
         getInputedChatNames={this.getInputedChatNames}
         getSearchedChatList={this.getSearchedChatList}
-        searchedChatData={this.props.searchedChatData}
         getCurrentChat={this.getCurrentChat}
+        searchedChatData={this.state.searchedChatData}
         searchedChatListLoaded={this.state.chatListLoaded}/>
     );
   }
 }
-
-const mapStateToProps = function(state) {
-  return {
-    chatListData: state.chatListState,
-    searchedChatData: state.searchState
-  };
-};
-
-export default connect(mapStateToProps)(SearchController);

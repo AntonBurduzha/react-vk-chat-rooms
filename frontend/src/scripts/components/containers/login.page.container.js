@@ -7,7 +7,7 @@ import { applyLoadingStrip } from '../../api/common.api'
 import { setVkUserId } from '../../actions/login.actions'
 import LoginPageView from '../views/login.page.view'
 
-class LoginPageController extends Component {
+class LoginPageContainer extends Component {
   constructor(props){
     super(props);
     this.signUp = this.signUp.bind(this);
@@ -70,4 +70,4 @@ const mapStateToProps = function(state) {
   };
 };
 
-export default connect(mapStateToProps)(LoginPageController);
+export default connect(mapStateToProps)(LoginPageContainer);

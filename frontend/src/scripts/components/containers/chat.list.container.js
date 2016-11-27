@@ -7,7 +7,7 @@ import { applyLoadingStrip } from '../../api/common.api'
 import { getDefaultChatList } from '../../actions/user.actions'
 import ChatListView from '../views/chat.list.view'
 
-class ChatListController extends Component {
+class ChatListContainer extends Component {
   constructor(props){
     super(props);
     this.getCurrentChat = this.getCurrentChat.bind(this);
@@ -45,4 +45,4 @@ const mapStateToProps = function(state) {
   };
 };
 
-export default connect(mapStateToProps)(ChatListController);
+export default connect(mapStateToProps)(ChatListContainer);

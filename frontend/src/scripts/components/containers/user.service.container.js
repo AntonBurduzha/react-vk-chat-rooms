@@ -5,7 +5,7 @@ import loginApi from '../../api/login.api'
 import { setVkUserData } from '../../actions/login.actions'
 import UserServiceView from '../views/user.service.view'
 
-class UserServiceController extends Component {
+class UserServiceContainer extends Component {
   constructor() {
     super();
     this.selectMenuItem = this.selectMenuItem.bind(this);
@@ -44,4 +44,4 @@ const mapStateToProps = function(state) {
   };
 };
 
-export default connect(mapStateToProps)(UserServiceController);
+export default connect(mapStateToProps)(UserServiceContainer);

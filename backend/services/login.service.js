@@ -3,8 +3,22 @@ const loginService = {};
 loginService.createUser = createUser;
 loginService.getUserData = getUserData;
 loginService.getChatList = getChatList;
+loginService.getSearchedChatList = getSearchedChatList;
 
 module.exports = loginService;
+
+function getSearchedChatList(req) {
+  const db = req.db;
+  let collection = db.get('chatroom');
+  let chatlist = {};
+  return new Promise((resolve, reject) => {
+    collection.find({name: {$regex: req.params.id}}, (err, chatRoomList) => {
+      if(err) throw err;
+      chatlist = chatRoomList;
+      resolve(chatlist);
+    });
+  });
+}
 
 function getChatList(req) {
   const db = req.db;
@@ -31,7 +45,6 @@ function getUserData(req) {
     });
   });
 }
-
 
 function createUser(req) {
   const db = req.db;

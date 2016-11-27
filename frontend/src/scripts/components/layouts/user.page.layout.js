@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import UserServiceController from '../controllers/user.service.controller'
+import UserServiceContainer from '../containers/user.service.container'
 
 export default class UserPageLayout extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ export default class UserPageLayout extends Component {
   render() {
     return (
       <div className="row container-main">
-        <UserServiceController />
+        <UserServiceContainer />
         {this.props.children}
         <div className="col-md-3 container-user-page"></div>
       </div>
