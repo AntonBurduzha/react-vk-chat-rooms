@@ -21,7 +21,6 @@ export default class LoginPageView extends React.Component {
             <a className="text-btn-link" href="https://vk.com/login">Регистрация Vk</a>
           </button>
         </div>
-        <div className="loading-strip"></div>
       </div>
     );
   }

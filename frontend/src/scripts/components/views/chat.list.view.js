@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import {Link} from 'react-router'
 
 export default class ChatListView extends Component {
   render(){
@@ -11,9 +10,9 @@ export default class ChatListView extends Component {
           return(
             <div key={chatRoom.id} className="article-chatroom">
               <img className="img-chatroom-list" src={chatRoom.logo} alt="marvel"/>
-              <Link
-                to="/userpage/current_chat"
-                className="link-chatroom-list" onClick={self.props.getCurrentChat}>{chatRoom.name}</Link>
+              <h3
+                className="text-chatroom-list"
+                onClick={self.props.getCurrentChat}>{chatRoom.name}</h3>
             </div>
           );
         })}

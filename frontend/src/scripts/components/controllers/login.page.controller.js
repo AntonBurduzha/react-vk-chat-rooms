@@ -1,21 +1,20 @@
-import React, {Component} from 'react'
-import LoginPageView from '../views/view.login.page'
-import loginApi from '../../api/login.api'
-import {connect} from 'react-redux'
-import {browserHistory} from 'react-router'
-import loginActions from '../../actions/login.actions'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 import store from '../../store'
+import loginApi from '../../api/login.api'
+import { applyLoadingStrip } from '../../api/common.api'
+import { setVkUserId } from '../../actions/login.actions'
+import LoginPageView from '../views/login.page.view'
 
 class LoginPageController extends Component {
   constructor(props){
     super(props);
     this.signUp = this.signUp.bind(this);
-    this.applyLoadingStrip = this.applyLoadingStrip.bind(this);
     this.state = {'userId': ''};
   }
 
   componentDidMount(){
-    let self = this;
     let userId = '';
     VK.init({
       apiId: 5709095
@@ -23,7 +22,7 @@ class LoginPageController extends Component {
     VK.Auth.login((res) => {
       if (res.session) {
         userId = res.session.user['id'];
-        store.dispatch(loginActions.setVkUserId(userId));
+        store.dispatch(setVkUserId(userId));
         loginApi.getUserData(userId).then(result => {
           if(result.userInfo !== null){
             localStorage.setItem('user', result.userInfo.id);
@@ -33,16 +32,11 @@ class LoginPageController extends Component {
     });
   }
 
-  applyLoadingStrip(){
-    let loadingStrip = document.querySelector('.loading-strip');
-    loadingStrip.style.animation = 'strip-progress .8s';
-  }
-
   signUp() {
     let self = this;
     var accessToken = localStorage.getItem('user');
     if(this.props.userId === accessToken) {
-      self.applyLoadingStrip();
+      applyLoadingStrip();
       setTimeout(() => browserHistory.push('/userpage'), 800);
     }
     else {

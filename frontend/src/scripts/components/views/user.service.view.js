@@ -6,9 +6,11 @@ export default class UserServiceView extends Component {
     return (
       <div className="col-md-3 container-user-page">
         <div className="article-user-info">
-          <img className="img-user-info" src={this.props.photo_200} alt="moe_litso"/>
-          <p className="text-user-info">{this.props.first_name}</p>
-          <p className="text-user-info text-user-info-name">{this.props.last_name}</p>
+          <a href={this.props.domain}>
+            <img className="img-user-info" src={this.props.photo_200} alt="moe_litso"/>
+          </a>
+          <a href={this.props.domain} className="text-user-info">{this.props.first_name}</a>
+          <a href={this.props.domain} className="text-user-info text-user-info-name">{this.props.last_name}</a>
         </div>
         <div className="divider-user-service"></div>
         <div className="article-user-service">

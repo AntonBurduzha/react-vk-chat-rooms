@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import UserServiceController from '../controllers/controller.user.service'
+import UserServiceController from '../controllers/user.service.controller'
 
 export default class UserPageLayout extends Component {
   constructor(props) {

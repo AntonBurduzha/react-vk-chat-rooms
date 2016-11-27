@@ -1,9 +1,11 @@
-import React, {Component} from 'react'
-import ChatListView from '../views/view.chat.list'
-import userApi from '../../api/user.api'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { browserHistory } from 'react-router'
 import store from '../../store'
-import {connect} from 'react-redux'
-import userActions from '../../actions/user.actions'
+import userApi from '../../api/user.api'
+import { applyLoadingStrip } from '../../api/common.api'
+import { getDefaultChatList } from '../../actions/user.actions'
+import ChatListView from '../views/chat.list.view'
 
 class ChatListController extends Component {
   constructor(props){
@@ -13,14 +15,18 @@ class ChatListController extends Component {
 
   componentDidMount(){
     userApi.getChatList().then(chatlist => {
-      store.dispatch(userActions.getDefaultChatList(chatlist.chatRoomList));
+      store.dispatch(getDefaultChatList(chatlist.chatRoomList));
     });
   }
 
   getCurrentChat(event){
     let chatName = event.target.textContent;
     this.props.chatListData.forEach((chatRoom) => {
-      if(chatName === chatRoom.name) localStorage.setItem('currentChat', chatName);
+      if(chatName === chatRoom.name) {
+        localStorage.setItem('currentChat', chatName);
+        applyLoadingStrip();
+        setTimeout(() => browserHistory.push('/userpage/current_chat'), 800);
+      }
     });
   }
 

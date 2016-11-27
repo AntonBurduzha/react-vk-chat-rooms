@@ -1,13 +1,12 @@
 import AppActionTypes from './action.types'
 
-const userActions = {};
-userActions.getDefaultChatList = getDefaultChatList;
-
-function getDefaultChatList(chatListData) {
+const getDefaultChatList = (chatListData) => {
   return {
     type: AppActionTypes.GET_DEFAULT_CHAT_LIST,
-    payload: chatListData
+    chatListData
   };
-}
+};
 
-export default userActions;
+export {
+  getDefaultChatList
+};

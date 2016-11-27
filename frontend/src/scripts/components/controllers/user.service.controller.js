@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
-import UserServiceView from '../views/view.user.service'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import store from '../../store'
-import {connect} from 'react-redux'
 import loginApi from '../../api/login.api'
-import loginActions from '../../actions/login.actions'
+import { setVkUserData } from '../../actions/login.actions'
+import UserServiceView from '../views/user.service.view'
 
 class UserServiceController extends Component {
   constructor() {
@@ -15,7 +15,7 @@ class UserServiceController extends Component {
     let userId = localStorage.getItem('user');
 
     loginApi.getUserData(userId).then(userdata => {
-      store.dispatch(loginActions.setVkUserData(userdata.userInfo));
+      store.dispatch(setVkUserData(userdata.userInfo));
     });
   }
 
@@ -32,6 +32,7 @@ class UserServiceController extends Component {
       <UserServiceView first_name={this.props.userData.first_name}
                        last_name={this.props.userData.last_name}
                        photo_200={this.props.userData.photo_200}
+                       domain={this.props.userData.domain}
                        selectMenuItem={this.selectMenuItem}/>
     )
   }

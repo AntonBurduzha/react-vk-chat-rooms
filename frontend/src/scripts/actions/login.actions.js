@@ -1,21 +1,20 @@
 import AppActionTypes from './action.types'
 
-const loginActions = {};
-loginActions.setVkUserId = setVkUserId;
-loginActions.setVkUserData = setVkUserData;
-
-function setVkUserId(id) {
+const setVkUserId = (id) => {
   return {
     type: AppActionTypes.SET_VK_USER_ID,
-    payload: id
+    id
   };
-}
+};
 
-function setVkUserData(data) {
+const setVkUserData = (data) => {
   return {
     type: AppActionTypes.SET_VK_USER_DATA,
-    payload: data
+    data
   };
-}
+};
 
-export default loginActions;
+export {
+  setVkUserId,
+  setVkUserData
+};

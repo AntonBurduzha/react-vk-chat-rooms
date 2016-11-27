@@ -19,6 +19,7 @@ export default class MainLayout extends Component {
           <Link to="/" className="link-logout" onClick={this.logout}>Выйти</Link>
         </div>
         {this.props.children}
+        <div className="loading-strip"></div>
       </div>
     )
   }

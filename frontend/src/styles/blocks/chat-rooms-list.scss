@@ -21,14 +21,11 @@
     width: 50px;
   }
 
-  .link-chatroom-list {
+  .text-chatroom-list {
     color: $black;
+    cursor: pointer;
     display: inline-block;
     font-size: 18px;
     margin-left: 20px;
-
-    &:hover {
-      text-decoration: none;
-    }
   }
 }
