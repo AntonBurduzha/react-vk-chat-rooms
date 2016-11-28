@@ -1,0 +1,14 @@
+.article-chat-data {
+  border-bottom: 1px solid $child-color;
+  padding: 5px;
+
+  .img-chat-logo {
+    height: auto;
+    width: 30px;
+  }
+
+  .title-chat-name {
+    display: inline-block;
+    margin-left: 20px;
+  }
+}

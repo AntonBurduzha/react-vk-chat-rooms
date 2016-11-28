@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import store from '../../store'
 import userApi from '../../api/user.api'
-import { applyLoadingStrip } from '../../api/common.api'
+import { applyLoadingStrip, setUserActionComponentHeigth } from '../../api/common.api'
 import { getDefaultChatList } from '../../actions/user.actions'
 import ChatListView from '../views/chat.list.view'
 
@@ -14,6 +14,7 @@ class ChatListContainer extends Component {
   }
 
   componentDidMount(){
+    setUserActionComponentHeigth();
     userApi.getChatList().then(chatlist => {
       store.dispatch(getDefaultChatList(chatlist.chatRoomList));
     });
@@ -23,7 +24,8 @@ class ChatListContainer extends Component {
     let chatName = event.target.textContent;
     this.props.chatListData.forEach((chatRoom) => {
       if(chatName === chatRoom.name) {
-        localStorage.setItem('currentChat', chatName);
+        localStorage.setItem('currentChatName', chatName);
+        localStorage.setItem('currentChatLogo', chatRoom.logo);
         applyLoadingStrip();
         setTimeout(() => browserHistory.push('/userpage/current_chat'), 800);
       }

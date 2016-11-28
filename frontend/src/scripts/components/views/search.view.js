@@ -23,9 +23,9 @@ export default class SearchView extends Component {
       }
     }
     return (
-      <div className="col-md-6">
+      <div className="col-md-6 container-user-action">
         <div className="article-search">
-          <h2>Введите название чата:</h2>
+          <h3>Введите название чата:</h3>
           <input
             className="input-search"
             type="text"

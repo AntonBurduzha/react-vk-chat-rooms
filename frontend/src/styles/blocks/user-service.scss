@@ -1,3 +1,13 @@
+.container-main {
+  background-color: $child-color;
+  padding: 10px 0 15px;
+}
+
+.container-user-action {
+  background-color: $white;
+  overflow-y: scroll;
+}
+
 .article-user-service {
   background-color: $white;
   padding: 5px;

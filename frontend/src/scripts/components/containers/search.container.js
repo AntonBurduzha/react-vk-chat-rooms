@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { browserHistory } from 'react-router'
 import userApi from '../../api/user.api'
-import { applyLoadingStrip } from '../../api/common.api'
+import { applyLoadingStrip, setUserActionComponentHeigth } from '../../api/common.api'
 import SearchView from '../views/search.view'
 
 export default class SearchContainer extends Component {
@@ -15,6 +15,10 @@ export default class SearchContainer extends Component {
       'chatListLoaded': false,
       searchedChatData: []
     };
+  }
+
+  componentDidMount(){
+    setUserActionComponentHeigth();
   }
 
   getInputedChatNames(event){
@@ -32,10 +36,10 @@ export default class SearchContainer extends Component {
 
   getCurrentChat(event){
     let chatName = event.target.textContent;
-    console.log(this.state.chatListData);
     this.state.searchedChatData.forEach((chatRoom) => {
       if(chatName === chatRoom.name) {
-        localStorage.setItem('currentChat', chatName);
+        localStorage.setItem('currentChatName', chatName);
+        localStorage.setItem('currentChatLogo', chatRoom.logo);
         applyLoadingStrip();
         setTimeout(() => browserHistory.push('/userpage/current_chat'), 800);
       }
