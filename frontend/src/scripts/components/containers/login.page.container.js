@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import store from '../../store'
-import loginApi from '../../api/login.api'
+import { getUserData, postUserData } from '../../api/login.api'
 import { applyLoadingStrip } from '../../api/common.api'
 import { setVkUserId } from '../../actions/login.actions'
 import LoginPageView from '../views/login.page.view'
@@ -23,7 +23,7 @@ class LoginPageContainer extends Component {
       if (res.session) {
         userId = res.session.user['id'];
         store.dispatch(setVkUserId(userId));
-        loginApi.getUserData(userId).then(result => {
+        getUserData(userId).then(result => {
           if(result.userInfo !== null){
             localStorage.setItem('user', result.userInfo.id);
           }
@@ -46,7 +46,7 @@ class LoginPageContainer extends Component {
           userInfo.domain = `https://vk.com/${userInfo.domain}`;
           const paramsFirstPart = `id=${this.props.userId}&first_name=${userInfo.first_name}&last_name=${userInfo.last_name}`;
           const paramsLastPart = `&domain=${userInfo.domain}&photo_50=${userInfo.photo_50}&photo_200=${userInfo.photo_200_orig}`;
-          loginApi.postUserData(paramsFirstPart + paramsLastPart);
+          postUserData(paramsFirstPart + paramsLastPart);
           localStorage.setItem('user', this.props.userId);
           self.applyLoadingStrip();
           setTimeout(() => browserHistory.push('/userpage'), 800);

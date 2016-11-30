@@ -1,5 +1,6 @@
 .article-chat-data {
-  border-bottom: 1px solid $child-color;
+  border-bottom: 1px solid $base-color;
+  height: 50px;
   padding: 5px;
 
   .img-chat-logo {
@@ -10,5 +11,81 @@
   .title-chat-name {
     display: inline-block;
     margin-left: 20px;
+  }
+}
+
+.article-chat-tools {
+  border-top: 1px solid $child-color;
+  height: 117px;
+  padding: 5px 0;
+
+  .input-chat-message {
+    border: 1px solid $base-color;
+    border-radius: 5px;
+    display: block;
+    margin: auto;
+    margin-bottom: 10px;
+    max-height: 64px;
+    max-width: 90%;
+    padding-left: 10px;
+    width: 90%;
+  }
+
+  .btn-chat-message {
+    background-color: $base-color;
+    border: 0;
+    border-radius: 3px;
+    color: $white;
+    display: block;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    margin-left: 5%;
+    outline: none;
+    padding: 6px 17px;
+    width: 138px;
+
+    &:hover,
+    &focus {
+      background-color: $button-hover;
+    }
+  }
+}
+
+.article-chat {
+  overflow-y: auto;
+}
+
+.article-chat-message {
+  margin: auto;
+  padding: 5px;
+  width: 90%;
+
+  .img-user-message {
+    border-radius: 100%;
+    height: auto;
+    float: left;
+    width: 40px;
+  }
+
+  .text-user-name-message {
+    color: $base-color;
+    display: inline-block;
+    font-weight: bold;
+    margin: 5px 0 0 14px;
+  }
+
+  .text-user-message {
+    color: $black;
+    font-size: 13px;
+    margin-left: 9.6%;
+    margin-bottom: 0;
+  }
+
+  .text-date-message {
+    color: 	#C0C0C0;
+    display: inline-block;
+    font-size: 12px;
+    margin-left: 10px;
+    margin-bottom: 5px;
   }
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { browserHistory } from 'react-router'
-import userApi from '../../api/user.api'
+import { getSearchedChatList } from '../../api/user.api'
 import { applyLoadingStrip, setUserActionComponentHeigth } from '../../api/common.api'
 import SearchView from '../views/search.view'
 
@@ -29,7 +29,7 @@ export default class SearchContainer extends Component {
     let self = this;
     this.state.inputedChats.length > 0 ? this.setState({'chatListLoaded': true}) : this.setState({'chatListLoaded': false});
     let inputedChatName = self.state.inputedChats.toLowerCase();
-    userApi.getSearchedChatList(inputedChatName).then(chatlist => {
+    getSearchedChatList(inputedChatName).then(chatlist => {
       self.setState({searchedChatData: chatlist});
     });
   }

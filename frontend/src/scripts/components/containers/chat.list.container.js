@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import store from '../../store'
-import userApi from '../../api/user.api'
+import { getChatList } from '../../api/user.api'
 import { applyLoadingStrip, setUserActionComponentHeigth } from '../../api/common.api'
 import { getDefaultChatList } from '../../actions/user.actions'
 import ChatListView from '../views/chat.list.view'
@@ -15,7 +15,7 @@ class ChatListContainer extends Component {
 
   componentDidMount(){
     setUserActionComponentHeigth();
-    userApi.getChatList().then(chatlist => {
+    getChatList().then(chatlist => {
       store.dispatch(getDefaultChatList(chatlist.chatRoomList));
     });
   }

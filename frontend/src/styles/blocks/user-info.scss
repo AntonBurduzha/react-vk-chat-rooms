@@ -5,6 +5,7 @@
 .article-user-info {
   @extend %clearfix;
   background-color: $white;
+  border: 1px solid $base-color;
   padding: 10px;
   width: 100%;
 

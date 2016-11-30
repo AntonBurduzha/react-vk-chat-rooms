@@ -1,5 +1,5 @@
-const getUserData = userId =>{
-  return fetch(`/userdata/${userId}`, {
+const getCurrentChatMsg = chatName =>{
+  return fetch(`/userdata/chat/${chatName}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -7,17 +7,17 @@ const getUserData = userId =>{
   }).then(response => response.json())
 };
 
-const postUserData = data => {
-   fetch('/userdata', {
+const postCurrentChatMsg = msgData => {
+  fetch('/userdata/chat', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    body: data
+    body: msgData
   });
 };
 
 export {
-  getUserData,
-  postUserData
+  getCurrentChatMsg,
+  postCurrentChatMsg
 };

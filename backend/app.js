@@ -6,7 +6,9 @@ const config = require('./config.json');
 const monk = require('monk');
 const db = monk(config.db);
 
-const loginControl = require('./controllers/user.controller');
+const userControl = require('./controllers/user.controller');
+const chatListControl = require('./controllers/chat.list.controller');
+const chatControl = require('./controllers/chat.controller');
 
 const app = express();
 
@@ -19,7 +21,9 @@ app.use((req,res,next) => {
   next();
 });
 
-app.use('/userdata', loginControl);
+app.use('/userdata', chatControl);
+app.use('/userdata', chatListControl);
+app.use('/userdata', userControl);
 
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, '../frontend/src/index.html'));

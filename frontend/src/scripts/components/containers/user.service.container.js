@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import store from '../../store'
-import loginApi from '../../api/login.api'
+import { getUserData } from '../../api/login.api'
 import { setVkUserData } from '../../actions/login.actions'
 import UserServiceView from '../views/user.service.view'
 
@@ -14,7 +14,7 @@ class UserServiceContainer extends Component {
   componentDidMount() {
     let userId = localStorage.getItem('user');
 
-    loginApi.getUserData(userId).then(userdata => {
+    getUserData(userId).then(userdata => {
       store.dispatch(setVkUserData(userdata.userInfo));
     });
   }

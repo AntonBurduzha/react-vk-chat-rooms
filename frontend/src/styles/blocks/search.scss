@@ -1,5 +1,5 @@
 .article-search {
-  border-bottom: 1px solid $child-color;
+  border-bottom: 1px solid $base-color;
   padding-bottom: 15px;
 
   .input-search {
@@ -29,4 +29,8 @@
       background-color: $button-hover;
     }
   }
+}
+
+.text-search {
+  margin-top: 20px;
 }

@@ -7,7 +7,7 @@ export default class SearchView extends Component {
     if(this.props.searchedChatData.length > 0){
       searchedChatData = this.props.searchedChatData.map(chatRoom => {
         return (
-          <div key={chatRoom.id} className="article-chatroom">
+          <div key={chatRoom.id} className="article-chatroom-list">
             <img className="img-chatroom-list" src={chatRoom.logo} alt="marvel"/>
             <h3
               className="text-chatroom-list"
@@ -17,9 +17,9 @@ export default class SearchView extends Component {
       })
     } else {
       if(this.props.searchedChatListLoaded) {
-        searchedChatData = <p>Пока нет результатов</p>
+        searchedChatData = <p className="text-search text-center">Пока нет результатов</p>
       } else {
-        searchedChatData = <p>Вы пока ничего не ввели</p>
+        searchedChatData = <p className="text-search text-center">Вы пока ничего не ввели</p>
       }
     }
     return (
