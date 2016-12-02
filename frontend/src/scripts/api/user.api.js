@@ -16,7 +16,17 @@ const getSearchedChatList = chatNameReg => {
   }).then(response => response.json())
 };
 
+const getMyChatList = userId => {
+  return fetch(`/userdata/mychatlist/${userId}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }).then(response => response.json())
+};
+
 export {
   getChatList,
-  getSearchedChatList
+  getSearchedChatList,
+  getMyChatList
 };

@@ -1,24 +1,24 @@
 const app = require('../app');
 const debug = require('debug')('app:server');
 const http = require('http').Server(app);
-
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
+http.listen(port);
 
 let io = require('socket.io')(http);
 
-io.on('connection', function(socket){
+io.on('connection', socket =>{
   console.log('new user connected');
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
-  });
-  socket.on('send.message', function (msgData) {
+
+  socket.on('send.message', msgData => {
     io.emit('send.message', msgData);
+  });
+
+  socket.on('disconnect', () =>{
+    console.log('user disconnected');
   });
 });
 
-
-http.listen(port);
 http.on('error', onError);
 http.on('listening', onListening);
 

@@ -7,9 +7,9 @@ import { setUserActionComponentHeigth, setChatArticleHeight } from '../../api/co
 import { setVkUserData } from '../../actions/login.actions'
 import { setCurrentChatMsg, setCurrentChatMsgData } from '../../actions/chat.action'
 import ChatView from '../views/chat.view'
-const io = require('socket.io-client');
+let io = require('socket.io-client');
 
-var socket = io();
+let socket = io();
 
 class ChatContainer extends Component {
   constructor(props){
@@ -38,7 +38,6 @@ class ChatContainer extends Component {
     getCurrentChatMsg(chatName).then(chatMsg => {
       store.dispatch(setCurrentChatMsg(chatMsg));
     });
-    this.socket = io('/userpage/current_chat');
     socket.on('send.message', this.messageRecieve);
   }
 

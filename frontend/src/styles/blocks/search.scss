@@ -2,6 +2,11 @@
   border-bottom: 1px solid $base-color;
   padding-bottom: 15px;
 
+  .title-search-chatrooms-list {
+    border-bottom: 0;
+    margin-bottom: 0;
+  }
+
   .input-search {
     border: 1px solid $base-color;
     border-radius: 5px;
