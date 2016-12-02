@@ -4,9 +4,9 @@ export default class ChatView extends Component {
   render(){
     let chatMsgList;
     if(this.props.chatMsgList.length > 0){
-      chatMsgList = this.props.chatMsgList.map(msgData => {
+      chatMsgList = this.props.chatMsgList.map( (msgData , i) => {
         return (
-          <div className="article-chat-message" key={msgData.text}>
+          <div className="article-chat-message" key={i}>
             <a href={msgData.domain}>
               <img className="img-user-message" src={msgData.photo_50} alt="user-photo"/>
             </a>

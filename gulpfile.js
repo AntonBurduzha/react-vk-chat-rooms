@@ -88,6 +88,8 @@ gulp.task('vendor', function () {
     .pipe(gulp.dest('frontend/dist/css'));
   gulp.src('node_modules/jquery/dist/jquery.min.js')
     .pipe(gulp.dest('frontend/dist/js'));
+  gulp.src('node_modules/socket.io-client/dist/socket.io.js')
+    .pipe(gulp.dest('frontend/dist/js'));
 });
 
 gulp.task('js-lint', function () {

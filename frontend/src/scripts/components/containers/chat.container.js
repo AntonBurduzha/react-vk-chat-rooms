@@ -5,14 +5,18 @@ import { getUserData } from '../../api/login.api'
 import { getCurrentChatMsg, postCurrentChatMsg } from '../../api/chat.api'
 import { setUserActionComponentHeigth, setChatArticleHeight } from '../../api/common.api'
 import { setVkUserData } from '../../actions/login.actions'
-import { setCurrentChatMsg } from '../../actions/chat.action'
+import { setCurrentChatMsg, setCurrentChatMsgData } from '../../actions/chat.action'
 import ChatView from '../views/chat.view'
+const io = require('socket.io-client');
+
+var socket = io();
 
 class ChatContainer extends Component {
   constructor(props){
     super(props);
     this.getInputedMessage = this.getInputedMessage.bind(this);
     this.postInputedMessage = this.postInputedMessage.bind(this);
+    this.messageRecieve = this.messageRecieve.bind(this);
     this.state = {
       chatName: '',
       chatLogo: '',
@@ -34,7 +38,12 @@ class ChatContainer extends Component {
     getCurrentChatMsg(chatName).then(chatMsg => {
       store.dispatch(setCurrentChatMsg(chatMsg));
     });
+    this.socket = io('/userpage/current_chat');
+    socket.on('send.message', this.messageRecieve);
+  }
 
+  messageRecieve(msgData){
+    store.dispatch(setCurrentChatMsgData(msgData));
   }
 
   getInputedMessage(event){
@@ -44,20 +53,21 @@ class ChatContainer extends Component {
   postInputedMessage(){
     let date = new Date().toLocaleString();
     let params = {
-      photo_50: `photo_50=${this.props.userData.photo_50}`,
-      first_name: `&first_name=${this.props.userData.first_name}`,
-      msgDate: `&date=${date}`,
-      domain: `&domain=${this.props.userData.domain}`,
-      msgText: `&text=${this.state.inputedMessage}`,
-      chatName: `&chatName=${this.state.chatName}`
+      photo_50: this.props.userData.photo_50,
+      first_name: this.props.userData.first_name,
+      date: date,
+      domain: this.props.userData.domain,
+      text: this.state.inputedMessage,
+      chatName: this.state.chatName
     };
-    postCurrentChatMsg(params.photo_50 + params.first_name + params.msgDate + params.domain + params.msgText + params.chatName);
+    let firstParam = `photo_50=${params.photo_50}&first_name=${params.first_name}&date=${params.date}`;
+    let secondParam = `&domain=${params.domain}&text=${params.text}&chatName=${params.chatName}`;
+    //postCurrentChatMsg(firstParam + secondParam);
     document.querySelector('.input-chat-message').value = '';
-    store.dispatch(postCurrentChatMsg([params]));
+    socket.emit('send.message', params);
   }
 
   render(){
-    console.log(this.props.chatMsgList);
     return (
       <ChatView
         chatLogo={this.state.chatLogo}

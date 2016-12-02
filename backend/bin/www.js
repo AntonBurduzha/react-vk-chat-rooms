@@ -1,15 +1,26 @@
 const app = require('../app');
 const debug = require('debug')('app:server');
-const http = require('http');
+const http = require('http').Server(app);
 
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-const server = http.createServer(app);
+let io = require('socket.io')(http);
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+io.on('connection', function(socket){
+  console.log('new user connected');
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+  socket.on('send.message', function (msgData) {
+    io.emit('send.message', msgData);
+  });
+});
+
+
+http.listen(port);
+http.on('error', onError);
+http.on('listening', onListening);
 
 function normalizePort(val) {
   let port = parseInt(val, 10);
@@ -49,7 +60,7 @@ function onError(error) {
 }
 
 function onListening() {
-  let addr = server.address();
+  let addr = http.address();
   let bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
