@@ -10,8 +10,9 @@ let io = require('socket.io')(http);
 io.on('connection', socket =>{
   console.log('new user connected');
 
-  socket.on('send.message', msgData => {
-    io.emit('send.message', msgData);
+  socket.on('room', (id, msgData) => {
+    socket.join(id);
+    io.sockets.in(id).emit('send.message', msgData);
   });
 
   socket.on('disconnect', () =>{

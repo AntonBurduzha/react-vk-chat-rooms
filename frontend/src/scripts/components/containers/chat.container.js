@@ -38,6 +38,7 @@ class ChatContainer extends Component {
     getCurrentChatMsg(chatName).then(chatMsg => {
       store.dispatch(setCurrentChatMsg(chatMsg));
     });
+    socket.on('room');
     socket.on('send.message', this.messageRecieve);
   }
 
@@ -63,7 +64,7 @@ class ChatContainer extends Component {
     let secondParam = `&domain=${params.domain}&text=${params.text}&chatName=${params.chatName}`;
     //postCurrentChatMsg(firstParam + secondParam);
     document.querySelector('.input-chat-message').value = '';
-    socket.emit('send.message', params);
+    socket.emit('room', params.chatName, params);
   }
 
   render(){
