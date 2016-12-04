@@ -1,0 +1,74 @@
+.article-create-chat {
+  .text-create-chat {
+    font-size:  16px;
+    margin-bottom: 5px;
+  }
+
+  .input-create-chat {
+    border: 1px solid $base-color;
+    border-radius: 5px;
+    height: 32px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    width: 50%;
+  }
+
+  .btn-create-chat {
+    background-color: $base-color;
+    border: 0;
+    border-radius: 3px;
+    color: $white;
+    display: block;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    outline: none;
+    padding: 6px 17px;
+    width: 138px;
+
+    &:hover,
+    &focus {
+      background-color: $button-hover;
+    }
+  }
+
+  .tooltip-create-chat {
+    border-bottom: 1px solid $base-color;
+    display: inline-block;
+    margin-left: 15px;
+    position: relative;
+    width: 70px;
+
+    .tooltiptext-create-chat {
+      background-color: $white;
+      border: 1px solid $base-color;
+      border-radius: 5px;
+      color: $black;
+      padding: 5px;
+      position: absolute;
+      right: -210px;
+      text-align: center;
+      top: -5px;
+      visibility: hidden;
+      width: 200px;
+    }
+
+    &:hover {
+      .tooltiptext-create-chat {
+        visibility: visible;
+      }
+    }
+  }
+
+  .list-create-chat {
+    margin: 0;
+    padding-left: 25px;
+  }
+
+  .list-item-create-chat {
+    text-decoration: underline;
+  }
+}
+
+.empty-fields {
+  border-color: $red;
+}
