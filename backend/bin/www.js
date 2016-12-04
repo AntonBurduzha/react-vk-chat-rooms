@@ -10,9 +10,19 @@ let io = require('socket.io')(http);
 io.on('connection', socket =>{
   console.log('new user connected');
 
-  socket.on('room', (id, msgData) => {
+  socket.on('room', id => {
     socket.join(id);
-    io.sockets.in(id).emit('send.message', msgData);
+  });
+
+  socket.on('send.message', msgData => {
+    setTimeout(() => {
+      io.sockets.in(msgData.chatName).emit('send.message', msgData)
+    }, 250);
+  });
+
+  socket.on('leave.room', id =>{
+    socket.leave(id);
+    console.log('user disconnected');
   });
 
   socket.on('disconnect', () =>{

@@ -14,7 +14,7 @@ const postCurrentChatMsg = msgData => {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     body: msgData
-  });
+  }).then(response => response.json())
 };
 
 export {

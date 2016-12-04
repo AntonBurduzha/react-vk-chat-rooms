@@ -7,21 +7,29 @@ import { setUserActionComponentHeigth, setChatArticleHeight } from '../../api/co
 import { setVkUserData } from '../../actions/login.actions'
 import { setCurrentChatMsg, setCurrentChatMsgData } from '../../actions/chat.action'
 import ChatView from '../views/chat.view'
-let io = require('socket.io-client');
 
-let socket = io();
+const io = require('socket.io-client');
 
 class ChatContainer extends Component {
   constructor(props){
     super(props);
     this.getInputedMessage = this.getInputedMessage.bind(this);
     this.postInputedMessage = this.postInputedMessage.bind(this);
-    this.messageRecieve = this.messageRecieve.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
     this.state = {
       chatName: '',
       chatLogo: '',
-      inputedMessage: ''
+      inputedMessage: '',
+      socket: io()
     };
+  }
+
+  componentWillUnmount(){
+    this.state.socket.emit('leave.room', this.state.chatName);
+  }
+
+  sendMessage(msgData) {
+    store.dispatch(setCurrentChatMsgData(msgData));
   }
 
   componentDidMount(){
@@ -38,12 +46,9 @@ class ChatContainer extends Component {
     getCurrentChatMsg(chatName).then(chatMsg => {
       store.dispatch(setCurrentChatMsg(chatMsg));
     });
-    socket.on('room');
-    socket.on('send.message', this.messageRecieve);
-  }
-
-  messageRecieve(msgData){
-    store.dispatch(setCurrentChatMsgData(msgData));
+    this.state.socket.emit('room', chatName);
+    this.state.socket.on('send.message', this.sendMessage);
+    this.state.socket.on('leave.room');
   }
 
   getInputedMessage(event){
@@ -51,20 +56,22 @@ class ChatContainer extends Component {
   }
 
   postInputedMessage(){
-    let date = new Date().toLocaleString();
-    let params = {
-      photo_50: this.props.userData.photo_50,
-      first_name: this.props.userData.first_name,
-      date: date,
-      domain: this.props.userData.domain,
-      text: this.state.inputedMessage,
-      chatName: this.state.chatName
-    };
-    let firstParam = `photo_50=${params.photo_50}&first_name=${params.first_name}&date=${params.date}`;
-    let secondParam = `&domain=${params.domain}&text=${params.text}&chatName=${params.chatName}`;
-    //postCurrentChatMsg(firstParam + secondParam);
-    document.querySelector('.input-chat-message').value = '';
-    socket.emit('room', params.chatName, params);
+    if(this.state.inputedMessage.length > 0){
+      let date = new Date().toLocaleString();
+      let params = {
+        photo_50: this.props.userData.photo_50,
+        first_name: this.props.userData.first_name,
+        date: date,
+        domain: this.props.userData.domain,
+        text: this.state.inputedMessage,
+        chatName: this.state.chatName
+      };
+      let firstParam = `photo_50=${params.photo_50}&first_name=${params.first_name}&date=${params.date}`;
+      let secondParam = `&domain=${params.domain}&text=${params.text}&chatName=${params.chatName}`;
+      postCurrentChatMsg(firstParam + secondParam);
+      document.querySelector('.input-chat-message').value = '';
+      this.state.socket.emit('send.message', params);
+    }
   }
 
   render(){
