@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { setUserActionComponentHeigth, showEmptyFields } from '../../api/common.api'
 import { getChatList } from '../../api/user.api'
 import CreateChatView from '../views/create.chat.view'
+import update from 'immutability-helper';
 
 export default class CreateChatContainer extends Component {
   constructor(props){
@@ -21,21 +22,25 @@ export default class CreateChatContainer extends Component {
         messages: []
       },
       chatRoomList: [],
-      verify: true
+      'verify': true
     };
   }
 
   getInputedChatName(event){
-    this.setState({newChatData: {name: event.target.value, id: event.target.value.toLowerCase()}});
+    let stateName = update(this.state.newChatData, {name: {$set: event.target.value},
+      id: {$set: event.target.value.toLowerCase()}});
+    this.setState({newChatData: stateName});
   }
 
   getInputedChatLogoURL(event){
-    this.setState(Object.assign(this.state.newChatData, {logo: event.target.value}));
+    let stateLogo = update(this.state.newChatData, {logo: {$set: event.target.value}});
+    this.setState({newChatData: stateLogo});
   }
 
   componentDidMount(){
     let self = this;
-    self.setState({newChatData: {owner: localStorage.getItem('user')}});
+    let stateOwner = update(self.state.newChatData, {owner: {$set: localStorage.getItem('user')}});
+    self.setState({newChatData: stateOwner});
     setUserActionComponentHeigth();
     getChatList().then(chatlist => {
       self.setState({chatRoomList: chatlist.chatRoomList});
@@ -50,20 +55,20 @@ export default class CreateChatContainer extends Component {
           self.setState({verify: false});
         }
       });
-    } else {
+    }
+    else {
       self.setState({verify: false});
       showEmptyFields(self.state.newChatData.name, self.state.newChatData.logo);
     }
   }
 
   applyChatCreating(){
-    //this.checkInputedData();
+    this.checkInputedData();
     //console.log(this.state.verify);
     //console.log(this.state.newChatData);
   }
 
   render(){
-    console.log(this.state);
     return (
       <CreateChatView
         getInputedChatName={this.getInputedChatName}
