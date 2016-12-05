@@ -11,13 +11,15 @@ export default class CreateChatView extends Component {
             className="input-create-chat input-create-chat-name"
             placeholder="Название чата"
             type="text"
-            onChange={this.props.getInputedChatName}/>
+            onChange={this.props.getInputedChatName}
+            onFocus={this.props.changeEmptyField}/>
           <p className="text-create-chat">URL логотипа чата:</p>
           <input
             className="input-create-chat input-create-chat-url"
             placeholder="URL логотипа"
             type="text"
-            onChange={this.props.getInputedChatLogoURL}/>
+            onChange={this.props.getInputedChatLogoURL}
+            onFocus={this.props.changeEmptyField}/>
           <div className="tooltip-create-chat">Подсказка
             <span className="tooltiptext-create-chat">
               Загрузите изображение

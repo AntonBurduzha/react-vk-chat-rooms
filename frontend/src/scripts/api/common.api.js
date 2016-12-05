@@ -28,17 +28,22 @@ const setChatArticleHeight = () => {
   articleChat.style.height = userActionComponent - articleChatData - articleChatTools + 'px';
 };
 
+const cleareCreateChatFields = () => {
+  document.querySelector('.input-create-chat-name').value = '';
+  document.querySelector('.input-create-chat-url').value = '';
+};
+
 const showEmptyFields = (name, url) => {
   let inputName = document.querySelector('.input-create-chat-name');
   let inputURL = document.querySelector('.input-create-chat-url');
   let inputsCreateChat = document.querySelectorAll('.input-create-chat');
   if(name.length === 0 && url.length === 0) {
-    inputsCreateChat.forEach(item => {
-      item.classList.add('empty-fields');
-    });
-  } else if(name.length === 0){
+    inputsCreateChat.forEach(item => item.classList.add('empty-fields'));
+  }
+  else if(name.length === 0){
     inputName.classList.add('empty-fields');
-  } else {
+  }
+  else {
     inputURL.classList.add('empty-fields');
   }
 };
@@ -48,5 +53,6 @@ export {
   setUserServiceHeigth,
   setUserActionComponentHeigth,
   setChatArticleHeight,
-  showEmptyFields
+  showEmptyFields,
+  cleareCreateChatFields
 }

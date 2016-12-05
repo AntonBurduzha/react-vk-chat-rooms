@@ -25,8 +25,19 @@ const getMyChatList = userId => {
   }).then(response => response.json())
 };
 
+const postNewChat = chatData => {
+  fetch('/userdata/create_chat', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: chatData
+  }).then(response => response.json())
+};
+
 export {
   getChatList,
   getSearchedChatList,
-  getMyChatList
+  getMyChatList,
+  postNewChat
 };

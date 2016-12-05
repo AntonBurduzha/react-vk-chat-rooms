@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
-import { setUserActionComponentHeigth, showEmptyFields } from '../../api/common.api'
-import { getChatList } from '../../api/user.api'
+import { setUserActionComponentHeigth, showEmptyFields, cleareCreateChatFields } from '../../api/common.api'
+import { getChatList, postNewChat } from '../../api/user.api'
 import CreateChatView from '../views/create.chat.view'
 import update from 'immutability-helper';
 
@@ -11,6 +11,7 @@ export default class CreateChatContainer extends Component {
     this.getInputedChatLogoURL = this.getInputedChatLogoURL.bind(this);
     this.applyChatCreating = this.applyChatCreating.bind(this);
     this.checkInputedData = this.checkInputedData.bind(this);
+    this.changeEmptyField = this.changeEmptyField.bind(this);
     this.state = {
       userId: '',
       newChatData: {
@@ -22,8 +23,12 @@ export default class CreateChatContainer extends Component {
         messages: []
       },
       chatRoomList: [],
-      'verify': true
+      verify: true
     };
+  }
+
+  changeEmptyField(event){
+    event.target.classList.remove('empty-fields');
   }
 
   getInputedChatName(event){
@@ -48,24 +53,37 @@ export default class CreateChatContainer extends Component {
   }
 
   checkInputedData(){
-    let self = this;
-    if(self.state.newChatData.name.length > 0 && self.state.newChatData.logo.length > 0){
-      self.state.chatRoomList.forEach(item => {
-        if(item.name === self.state.newChatData.name){
-          self.setState({verify: false});
+    if(this.state.newChatData.name.length && this.state.newChatData.logo.length){
+      for(let i = 0; i < this.state.chatRoomList.length; i++){
+        if(this.state.newChatData.name === this.state.chatRoomList[i].name){
+          this.setState({verify: false});
+          break;
         }
-      });
+      }
     }
     else {
-      self.setState({verify: false});
-      showEmptyFields(self.state.newChatData.name, self.state.newChatData.logo);
+      this.setState({verify: false});
+      showEmptyFields(this.state.newChatData.name, this.state.newChatData.logo);
     }
   }
 
   applyChatCreating(){
-    this.checkInputedData();
-    //console.log(this.state.verify);
-    //console.log(this.state.newChatData);
+    let promiseCheckInput = new Promise((resolve, reject) => resolve(this.checkInputedData()));
+    promiseCheckInput.then(() => {
+      if(this.state.verify){
+        cleareCreateChatFields();
+        let firstParam = `id=${this.state.newChatData.id}&name=${this.state.newChatData.name}`;
+        let secondParam = `&logo=${this.state.newChatData.logo}&owner=${this.state.newChatData.owner}`;
+
+        let stateChatList = update(this.state.chatRoomList, {$push: [this.state.newChatData]});
+        this.setState({chatRoomList: stateChatList});
+        postNewChat(firstParam+secondParam);
+      }
+      else {
+        cleareCreateChatFields();
+        this.setState({verify: true});
+      }
+    });
   }
 
   render(){
@@ -73,7 +91,8 @@ export default class CreateChatContainer extends Component {
       <CreateChatView
         getInputedChatName={this.getInputedChatName}
         getInputedChatLogoURL={this.getInputedChatLogoURL}
-        applyChatCreating={this.applyChatCreating}/>
+        applyChatCreating={this.applyChatCreating}
+        changeEmptyField={this.changeEmptyField}/>
     );
   }
 }

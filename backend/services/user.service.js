@@ -1,6 +1,7 @@
 const userService = {};
 userService.getUserData = getUserData;
 userService.postUserData = postUserData;
+userService.postNewChatData = postNewChatData;
 
 function getUserData(req) {
   const db = req.db;
@@ -28,6 +29,21 @@ function postUserData(req) {
   };
   collection.insert(userdata);
   return userdata;
+}
+
+function postNewChatData(req) {
+  const db = req.db;
+  var collection = db.get('chatroom');
+  var newChatData = {
+    id: req.body.id,
+    name: req.body.name,
+    logo: req.body.logo,
+    owner: req.body.owner,
+    members: [],
+    messages: []
+  };
+  collection.insert(newChatData);
+  return newChatData;
 }
 
 module.exports = userService;

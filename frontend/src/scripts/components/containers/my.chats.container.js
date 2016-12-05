@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import { setUserActionComponentHeigth } from '../../api/common.api'
+import { browserHistory } from 'react-router'
+import { applyLoadingStrip, setUserActionComponentHeigth } from '../../api/common.api'
 import { getMyChatList } from '../../api/user.api'
 import MyChatsView from '../views/my.chats.view'
 
@@ -23,7 +24,7 @@ export default class MyChatsContainer extends Component {
 
   getCurrentChat(event) {
     let chatName = event.target.textContent;
-    this.state.searchedChatData.forEach((chatRoom) => {
+    this.state.myChatRoomList.forEach((chatRoom) => {
       if (chatName === chatRoom.name) {
         localStorage.setItem('currentChatName', chatName);
         localStorage.setItem('currentChatLogo', chatRoom.logo);

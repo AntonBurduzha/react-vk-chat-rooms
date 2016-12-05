@@ -13,6 +13,10 @@
     width: 50%;
   }
 
+  .empty-fields {
+    border: 1px solid $red;
+  }
+
   .btn-create-chat {
     background-color: $base-color;
     border: 0;
@@ -67,8 +71,4 @@
   .list-item-create-chat {
     text-decoration: underline;
   }
-}
-
-.empty-fields {
-  border-color: $red;
 }
