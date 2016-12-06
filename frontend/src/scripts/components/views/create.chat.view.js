@@ -2,6 +2,10 @@ import React, {Component} from 'react'
 
 export default class CreateChatView extends Component {
   render(){
+    let result;
+    if(this.props.chatCreated){
+      result = <h5  className="text-chat-created text-center">Чат успешно создан. Перейдите на вкладку "Мои чаты"</h5>
+    }
     return (
       <div className="col-md-6 container-user-action">
         <h3 className="title-chatrooms-list title-search-chatrooms-list">Меню создания чата:</h3>
@@ -16,7 +20,7 @@ export default class CreateChatView extends Component {
           <p className="text-create-chat">URL логотипа чата:</p>
           <input
             className="input-create-chat input-create-chat-url"
-            placeholder="URL логотипа"
+            placeholder="http://..."
             type="text"
             onChange={this.props.getInputedChatLogoURL}
             onFocus={this.props.changeEmptyField}/>
@@ -36,6 +40,7 @@ export default class CreateChatView extends Component {
             className="btn-create-chat"
             onClick={this.props.applyChatCreating}>Создать</button>
         </div>
+        {result}
       </div>
     )
   }

@@ -34,7 +34,8 @@ export default class ChatView extends Component {
             className="input-chat-message"
             rows="3"
             placeholder="Введите сообщение"
-            onChange={this.props.getInputedMessage}/>
+            onChange={this.props.getInputedMessage}
+            onKeyPress={this.props.handleEnterKeyPress}/>
           <button
             className="btn-chat-message"
             onClick={this.props.postInputedMessage}>Отправить</button>

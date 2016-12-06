@@ -10,6 +10,7 @@ export default class SearchContainer extends Component {
     this.getInputedChatNames = this.getInputedChatNames.bind(this);
     this.getSearchedChatList = this.getSearchedChatList.bind(this);
     this.getCurrentChat = this.getCurrentChat.bind(this);
+    this.handleEnterKeyPress = this.handleEnterKeyPress.bind(this);
     this.state = {
       'inputedChats': '',
       'chatListLoaded': false,
@@ -34,6 +35,12 @@ export default class SearchContainer extends Component {
     });
   }
 
+  handleEnterKeyPress(event){
+    if (event.charCode === 13) {
+      this.getSearchedChatList();
+    }
+  }
+
   getCurrentChat(event){
     let chatName = event.target.textContent;
     this.state.searchedChatData.forEach((chatRoom) => {
@@ -53,7 +60,8 @@ export default class SearchContainer extends Component {
         getSearchedChatList={this.getSearchedChatList}
         getCurrentChat={this.getCurrentChat}
         searchedChatData={this.state.searchedChatData}
-        searchedChatListLoaded={this.state.chatListLoaded}/>
+        searchedChatListLoaded={this.state.chatListLoaded}
+        handleEnterKeyPress={this.handleEnterKeyPress}/>
     );
   }
 }

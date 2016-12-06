@@ -30,7 +30,8 @@ export default class SearchView extends Component {
             className="input-search"
             type="text"
             placeholder="Название чата"
-            onChange={this.props.getInputedChatNames}/>
+            onChange={this.props.getInputedChatNames}
+            onKeyPress={this.props.handleEnterKeyPress}/>
           <button className="btn-search" onClick={this.props.getSearchedChatList}>Найти</button>
         </div>
         {searchedChatData}

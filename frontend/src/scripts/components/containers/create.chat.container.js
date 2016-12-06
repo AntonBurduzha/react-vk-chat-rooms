@@ -23,7 +23,8 @@ export default class CreateChatContainer extends Component {
         messages: []
       },
       chatRoomList: [],
-      verify: true
+      verify: true,
+      chatCreated: false
     };
   }
 
@@ -52,6 +53,10 @@ export default class CreateChatContainer extends Component {
     });
   }
 
+  componentWillUnmount(){
+    this.setState({chatCreated: false});
+  }
+
   checkInputedData(){
     if(this.state.newChatData.name.length && this.state.newChatData.logo.length){
       for(let i = 0; i < this.state.chatRoomList.length; i++){
@@ -64,6 +69,8 @@ export default class CreateChatContainer extends Component {
     else {
       this.setState({verify: false});
       showEmptyFields(this.state.newChatData.name, this.state.newChatData.logo);
+      let stateInputedData = update(this.state.newChatData, {logo: {$set: ''}, name: {$set: ''}, id: {$set: ''}});
+      this.setState({newChatData: stateInputedData});
     }
   }
 
@@ -78,6 +85,7 @@ export default class CreateChatContainer extends Component {
         let stateChatList = update(this.state.chatRoomList, {$push: [this.state.newChatData]});
         this.setState({chatRoomList: stateChatList});
         postNewChat(firstParam+secondParam);
+        this.setState({chatCreated: true});
       }
       else {
         cleareCreateChatFields();
@@ -92,7 +100,8 @@ export default class CreateChatContainer extends Component {
         getInputedChatName={this.getInputedChatName}
         getInputedChatLogoURL={this.getInputedChatLogoURL}
         applyChatCreating={this.applyChatCreating}
-        changeEmptyField={this.changeEmptyField}/>
+        changeEmptyField={this.changeEmptyField}
+        chatCreated={this.state.chatCreated}/>
     );
   }
 }

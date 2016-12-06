@@ -16,6 +16,7 @@ class ChatContainer extends Component {
     this.getInputedMessage = this.getInputedMessage.bind(this);
     this.postInputedMessage = this.postInputedMessage.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
+    this.handleEnterKeyPress = this.handleEnterKeyPress.bind(this);
     this.state = {
       chatName: '',
       chatLogo: '',
@@ -55,6 +56,12 @@ class ChatContainer extends Component {
     this.setState({inputedMessage: event.target.value});
   }
 
+  handleEnterKeyPress(event){
+    if (event.charCode === 13) {
+      this.postInputedMessage();
+    }
+  }
+
   postInputedMessage(){
     if(this.state.inputedMessage.length > 0){
       let date = new Date().toLocaleString();
@@ -81,7 +88,8 @@ class ChatContainer extends Component {
         chatName={this.state.chatName}
         getInputedMessage={this.getInputedMessage}
         postInputedMessage={this.postInputedMessage}
-        chatMsgList={this.props.chatMsgList}/>
+        chatMsgList={this.props.chatMsgList}
+        handleEnterKeyPress={this.handleEnterKeyPress}/>
     );
   }
 }
