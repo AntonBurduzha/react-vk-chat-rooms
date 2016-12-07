@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
-import store from '../../store'
 import { getChatList } from '../../api/user.api'
 import { applyLoadingStrip, setUserActionComponentHeigth } from '../../api/common.api'
 import { getDefaultChatList } from '../../actions/user.actions'
@@ -16,7 +15,7 @@ class ChatListContainer extends Component {
   componentDidMount(){
     setUserActionComponentHeigth();
     getChatList().then(chatlist => {
-      store.dispatch(getDefaultChatList(chatlist.chatRoomList));
+      this.props.getDefaultChatList(chatlist.chatRoomList);
     });
   }
 
@@ -47,4 +46,8 @@ const mapStateToProps = function(state) {
   };
 };
 
-export default connect(mapStateToProps)(ChatListContainer);
+const mapDispatchToProps = (dispatch) => ({
+  getDefaultChatList: (chatListData) => getDefaultChatList(dispatch, chatListData)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatListContainer);

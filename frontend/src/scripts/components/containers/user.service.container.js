@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import store from '../../store'
 import { getUserData } from '../../api/login.api'
 import { setVkUserData } from '../../actions/login.actions'
 import UserServiceView from '../views/user.service.view'
@@ -15,7 +14,7 @@ class UserServiceContainer extends Component {
     let userId = localStorage.getItem('user');
 
     getUserData(userId).then(userdata => {
-      store.dispatch(setVkUserData(userdata.userInfo));
+      this.props.setVkUserData(userdata.userInfo);
     });
   }
 
@@ -44,4 +43,8 @@ const mapStateToProps = function(state) {
   };
 };
 
-export default connect(mapStateToProps)(UserServiceContainer);
+const mapDispatchToProps = (dispatch) => ({
+  setVkUserData: (data) => setVkUserData(dispatch, data)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserServiceContainer);

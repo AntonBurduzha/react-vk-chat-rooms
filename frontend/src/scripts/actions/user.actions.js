@@ -1,10 +1,10 @@
 import AppActionTypes from './action.types'
 
-const getDefaultChatList = (chatListData) => {
-  return {
+const getDefaultChatList = (dispatch, chatListData) => {
+  dispatch( {
     type: AppActionTypes.GET_DEFAULT_CHAT_LIST,
     chatListData
-  };
+  });
 };
 
 export {

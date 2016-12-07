@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
-import store from '../../store'
 import { getUserData } from '../../api/login.api'
 import { getCurrentChatMsg, postCurrentChatMsg } from '../../api/chat.api'
 import { setUserActionComponentHeigth, setChatArticleHeight } from '../../api/common.api'
@@ -30,7 +29,7 @@ class ChatContainer extends Component {
   }
 
   sendMessage(msgData) {
-    store.dispatch(setCurrentChatMsgData(msgData));
+    this.props.setCurrentChatMsgData(msgData);
   }
 
   componentDidMount(){
@@ -42,10 +41,10 @@ class ChatContainer extends Component {
     this.setState({chatName: chatName, chatLogo: chatLogo});
 
     getUserData(userId).then(userdata => {
-      store.dispatch(setVkUserData(userdata.userInfo));
+      this.props.setVkUserData(userdata.userInfo);
     });
     getCurrentChatMsg(chatName).then(chatMsg => {
-      store.dispatch(setCurrentChatMsg(chatMsg));
+      this.props.setCurrentChatMsg(chatMsg);
     });
     this.state.socket.emit('room', chatName);
     this.state.socket.on('send.message', this.sendMessage);
@@ -101,4 +100,10 @@ const mapStateToProps = function(state) {
   };
 };
 
-export default connect(mapStateToProps)(ChatContainer);
+const mapDispatchToProps = (dispatch) => ({
+  setVkUserData: (data) => setVkUserData(dispatch, data),
+  setCurrentChatMsg: (msgList) => setCurrentChatMsg(dispatch, msgList),
+  setCurrentChatMsgData: (msgData) => setCurrentChatMsgData(dispatch, msgData)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);

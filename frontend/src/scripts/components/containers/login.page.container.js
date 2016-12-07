@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
-import store from '../../store'
 import { getUserData, postUserData } from '../../api/login.api'
 import { applyLoadingStrip } from '../../api/common.api'
 import { setVkUserId } from '../../actions/login.actions'
@@ -22,7 +21,7 @@ class LoginPageContainer extends Component {
     VK.Auth.login((res) => {
       if (res.session) {
         userId = res.session.user['id'];
-        store.dispatch(setVkUserId(userId));
+        this.props.setVkUserId(userId);
         getUserData(userId).then(result => {
           if(result.userInfo !== null){
             localStorage.setItem('user', result.userInfo.id);
@@ -70,4 +69,8 @@ const mapStateToProps = function(state) {
   };
 };
 
-export default connect(mapStateToProps)(LoginPageContainer);
+const mapDispatchToProps = (dispatch) => ({
+  setVkUserId: (id) => setVkUserId(dispatch, id)
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPageContainer);
