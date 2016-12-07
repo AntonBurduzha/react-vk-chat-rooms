@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { getUserData } from '../../api/login.api'
 import { getCurrentChatMsg, postCurrentChatMsg } from '../../api/chat.api'
@@ -93,9 +93,17 @@ class ChatContainer extends Component {
   }
 }
 
+ChatContainer.propTypes = {
+  userData: PropTypes.object.isRequired,
+  chatMsgList: PropTypes.arrayOf(PropTypes.object).isRequired,
+  setVkUserData: PropTypes.func.isRequired,
+  setCurrentChatMsg: PropTypes.func.isRequired,
+  setCurrentChatMsgData: PropTypes.func.isRequired
+};
+
 const mapStateToProps = function(state) {
   return {
-    userData: state.loginState,
+    userData: state.userState,
     chatMsgList: state.chatState
   };
 };

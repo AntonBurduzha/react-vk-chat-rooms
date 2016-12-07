@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { getUserData } from '../../api/login.api'
 import { setVkUserData } from '../../actions/login.actions'
@@ -37,9 +37,14 @@ class UserServiceContainer extends Component {
   }
 }
 
+UserServiceContainer.propTypes = {
+  userData: PropTypes.object.isRequired,
+  setVkUserData: PropTypes.func.isRequired
+};
+
 const mapStateToProps = function(state) {
   return {
-    userData: state.loginState
+    userData: state.userState
   };
 };
 

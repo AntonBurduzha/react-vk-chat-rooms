@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import { getChatList } from '../../api/user.api'
@@ -39,6 +39,11 @@ class ChatListContainer extends Component {
     );
   }
 }
+
+ChatListContainer.propTypes = {
+  chatListData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getDefaultChatList: PropTypes.func.isRequired
+};
 
 const mapStateToProps = function(state) {
   return {

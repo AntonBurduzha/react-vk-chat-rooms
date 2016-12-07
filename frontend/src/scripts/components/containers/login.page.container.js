@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import { getUserData, postUserData } from '../../api/login.api'
@@ -62,6 +62,11 @@ class LoginPageContainer extends Component {
     )
   }
 }
+
+LoginPageContainer.propTypes = {
+  userId: PropTypes.string.isRequired,
+  setVkUserId: PropTypes.func.isRequired
+};
 
 const mapStateToProps = function(state) {
   return {

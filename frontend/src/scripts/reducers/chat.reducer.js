@@ -1,8 +1,10 @@
+import AppActionTypes from '../actions/action.types'
+
 const chatReducer = (state = [], action) => {
   switch(action.type){
-    case 'GET_CURRRENT_CHAT_MSG':
+    case AppActionTypes.GET_CURRRENT_CHAT_MSG:
       return [...action.msgList];
-    case 'SET_CURRRENT_CHAT_MSG_DATA':
+    case AppActionTypes.SET_CURRRENT_CHAT_MSG_DATA:
       return [...state, action.msgData];
     default:
       return state;
