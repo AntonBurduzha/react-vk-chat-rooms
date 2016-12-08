@@ -2,6 +2,7 @@ const userService = {};
 userService.getUserData = getUserData;
 userService.postUserData = postUserData;
 userService.postNewChatData = postNewChatData;
+userService.removeChat = removeChat;
 
 function getUserData(req) {
   const db = req.db;
@@ -44,6 +45,14 @@ function postNewChatData(req) {
   };
   collection.insert(newChatData);
   return newChatData;
+}
+
+function removeChat(req) {
+  const db = req.db;
+  var collection = db.get('chatroom');
+  let name = req.body.chatName;
+  collection.remove({name: name});
+  return name;
 }
 
 module.exports = userService;

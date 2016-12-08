@@ -13,6 +13,25 @@
 
   &:hover {
     background-color: $child-color;
+
+    .btn-remove-my-chat {
+      background-color: $child-color;
+    }
+  }
+
+  .btn-remove-my-chat {
+    background-color: $white;
+    border: none;
+    display: inline-block;
+    float: right;
+    margin-top: 15px;
+    margin-right: 10px;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+      outline: 0;
+    }
   }
 
   .img-chatroom-list {

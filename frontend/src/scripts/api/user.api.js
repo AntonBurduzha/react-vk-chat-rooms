@@ -35,9 +35,20 @@ const postNewChat = chatData => {
   }).then(response => response.json())
 };
 
+const removeMyChat = chatName => {
+  fetch('/userdata/remove_chat', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: chatName
+  }).then(response => response.json())
+};
+
 export {
   getChatList,
   getSearchedChatList,
   getMyChatList,
-  postNewChat
+  postNewChat,
+  removeMyChat
 };

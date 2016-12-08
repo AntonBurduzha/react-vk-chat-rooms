@@ -4,7 +4,17 @@ const userService = require('../services/user.service.js');
 
 router.post('/', createUser);
 router.post('/create_chat', createChat);
+router.post('/remove_chat', removeChat);
 router.get('/:id', getUserInfo);
+
+function removeChat(req, res) {
+  const result = userService.removeChat(req);
+  if (result || result === 0) {
+    res.json(result);
+  } else {
+    res.sendStatus(404);
+  }
+}
 
 function createUser(req, res) {
   const result = userService.postUserData(req);
