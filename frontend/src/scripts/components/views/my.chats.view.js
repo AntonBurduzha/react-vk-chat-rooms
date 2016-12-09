@@ -14,7 +14,7 @@ export default class MyChatsView extends Component {
               onClick={self.props.getCurrentChat}>{chatRoom.name}</h3>
             <button
               className="btn-remove-my-chat"
-              onClick={self.props.removeCurrentChat}>Удалить</button>
+              onClick={self.props.openModal}>Удалить</button>
           </div>
         );
       })

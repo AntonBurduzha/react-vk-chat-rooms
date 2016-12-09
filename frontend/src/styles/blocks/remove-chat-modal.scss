@@ -1,0 +1,29 @@
+.article-control-remove-chat {
+  margin: 0 auto;
+  padding-top: 30px;
+  width: 50%;
+
+  .btn-remove-chat {
+    background-color: $base-color;
+    border: 0;
+    border-radius: 3px;
+    color: $white;
+    display: inline-block;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    margin-left: 20px;
+    outline: none;
+    padding: 6px 17px;
+    width: 80px;
+
+    &:hover,
+    &focus {
+      background-color: $button-hover;
+    }
+  }
+
+  .btn-remove-chat-right {
+    margin-left: 50px;
+  }
+}
+

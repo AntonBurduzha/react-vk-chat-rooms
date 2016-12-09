@@ -1,17 +1,21 @@
 import React, {Component} from 'react'
-import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 import { applyLoadingStrip, setUserActionComponentHeigth } from '../../api/common.api'
 import { getMyChatList, removeMyChat } from '../../api/user.api'
 import MyChatsView from '../views/my.chats.view'
+import RemoveChatModalView from '../views/remove.chat.modal'
 
 export default class MyChatsContainer extends Component {
   constructor(props){
     super(props);
     this.getCurrentChat = this.getCurrentChat.bind(this);
     this.removeCurrentChat = this.removeCurrentChat.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.state = {
-      myChatRoomList: []
+      myChatRoomList: [],
+      modalIsOpen: false,
+      removedChatName: ''
     };
   }
 
@@ -24,16 +28,31 @@ export default class MyChatsContainer extends Component {
     });
   }
 
-  removeCurrentChat (event) {
-    let chatName = event.target.parentNode.childNodes[1].textContent;
+  removeCurrentChat () {
     //removeMyChat(`chatName=${chatName}`);
     let removedElemIndex = 0;
     let updatedChatList = this.state.myChatRoomList.map((item, i) => {
-      if (item.name === chatName) removedElemIndex = i;
+      if (item.name === this.state.removedChatName) removedElemIndex = i;
       return item;
     });
     updatedChatList.splice(removedElemIndex, 1);
-    this.setState({myChatRoomList: updatedChatList});
+    this.setState({
+      myChatRoomList: updatedChatList,
+      removedChatName: '',
+      modalIsOpen: false
+    });
+  }
+
+  openModal(event){
+    let chatName = event.target.parentNode.childNodes[1].textContent;
+    this.setState({
+      modalIsOpen: true,
+      removedChatName: chatName
+    });
+  }
+
+  closeModal(){
+    this.setState({modalIsOpen: false});
   }
 
   getCurrentChat(event) {
@@ -50,10 +69,16 @@ export default class MyChatsContainer extends Component {
 
   render(){
     return (
-      <MyChatsView
-        getCurrentChat={this.getCurrentChat}
-        myChatRoomList={this.state.myChatRoomList}
-        removeCurrentChat={this.removeCurrentChat}/>
+      <div className="article-my-chats">
+        <MyChatsView
+          getCurrentChat={this.getCurrentChat}
+          myChatRoomList={this.state.myChatRoomList}
+          openModal={this.openModal}/>
+        <RemoveChatModalView
+          modalIsOpen={this.state.modalIsOpen}
+          closeModal={this.closeModal}
+          removeCurrentChat={this.removeCurrentChat}/>
+      </div>
     );
   }
 }
