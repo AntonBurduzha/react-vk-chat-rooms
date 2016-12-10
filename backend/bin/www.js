@@ -8,10 +8,15 @@ http.listen(port);
 let io = require('socket.io')(http);
 
 io.on('connection', socket =>{
-  console.log('new user connected');
+  socket.on('room', (chatName, userId) => {
+    console.log(userId + ' joined to ' + chatName);
+    socket.join(chatName);
+  });
 
-  socket.on('room', id => {
-    socket.join(id);
+  socket.on('joined.members', (chatName, chatMembers) => {
+    setTimeout(() => {
+      io.sockets.in(chatName).emit('joined.members', chatMembers)
+    }, 250);
   });
 
   socket.on('send.message', msgData => {
@@ -20,9 +25,9 @@ io.on('connection', socket =>{
     }, 250);
   });
 
-  socket.on('leave.room', id =>{
-    socket.leave(id);
-    console.log('user disconnected');
+  socket.on('leave.room', (chatName, userId) =>{
+    console.log(userId + ' leave ' + chatName);
+    socket.leave(chatName);
   });
 
   socket.on('disconnect', () =>{

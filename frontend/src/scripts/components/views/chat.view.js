@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import ChatMembersView from './chat.members.dropdown'
 
 export default class ChatView extends Component {
   render(){
@@ -25,6 +26,7 @@ export default class ChatView extends Component {
         <div className="article-chat-data">
           <img className="img-chat-logo" src={this.props.chatLogo} alt="chat-logo"/>
           <h4 className="title-chat-name">{this.props.chatName}</h4>
+          <ChatMembersView chatMembers={this.props.chatMembers}/>
         </div>
         <div className="article-chat">
           {chatMsgList}

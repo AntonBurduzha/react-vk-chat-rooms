@@ -6,6 +6,7 @@ import { setUserActionComponentHeigth, setChatArticleHeight } from '../../api/co
 import { setVkUserData } from '../../actions/login.actions'
 import { setCurrentChatMsg, setCurrentChatMsgData } from '../../actions/chat.action'
 import ChatView from '../views/chat.view'
+import update from 'immutability-helper';
 
 const io = require('socket.io-client');
 
@@ -16,20 +17,36 @@ class ChatContainer extends Component {
     this.postInputedMessage = this.postInputedMessage.bind(this);
     this.sendMessage = this.sendMessage.bind(this);
     this.handleEnterKeyPress = this.handleEnterKeyPress.bind(this);
+    this.showAddedMembers = this.showAddedMembers.bind(this);
     this.state = {
       chatName: '',
       chatLogo: '',
       inputedMessage: '',
-      socket: io()
+      socket: io(),
+      chatMembers: []
     };
   }
 
   componentWillUnmount(){
-    this.state.socket.emit('leave.room', this.state.chatName);
+    const userId = localStorage.getItem('user');
+    this.state.socket.emit('leave.room', this.state.chatName, userId);
+    let leavedMembers = this.state.chatMembers;
+    let removedMemberIndex = 0;
+    leavedMembers.forEach((item, i) => {
+      if(item.id === userId) removedMemberIndex = i;
+    });
+    leavedMembers.splice(removedMemberIndex, 1);
+    this.setState({chatMembers: leavedMembers});
+    console.log(this.state.chatMembers);
   }
 
   sendMessage(msgData) {
     this.props.setCurrentChatMsgData(msgData);
+  }
+
+  showAddedMembers(chatMembers) {
+    const addedUsers = update(this.state.chatMembers, {$push: [chatMembers]});
+    this.setState({chatMembers: addedUsers});
   }
 
   componentDidMount(){
@@ -42,11 +59,13 @@ class ChatContainer extends Component {
 
     getUserData(userId).then(userdata => {
       this.props.setVkUserData(userdata.userInfo);
+      this.state.socket.emit('joined.members', chatName, userdata.userInfo);
     });
     getCurrentChatMsg(chatName).then(chatMsg => {
       this.props.setCurrentChatMsg(chatMsg);
     });
-    this.state.socket.emit('room', chatName);
+    this.state.socket.emit('room', chatName, userId);
+    this.state.socket.on('joined.members', this.showAddedMembers);
     this.state.socket.on('send.message', this.sendMessage);
     this.state.socket.on('leave.room');
   }
@@ -85,6 +104,7 @@ class ChatContainer extends Component {
       <ChatView
         chatLogo={this.state.chatLogo}
         chatName={this.state.chatName}
+        chatMembers={this.state.chatMembers}
         getInputedMessage={this.getInputedMessage}
         postInputedMessage={this.postInputedMessage}
         chatMsgList={this.props.chatMsgList}
