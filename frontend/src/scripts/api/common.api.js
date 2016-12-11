@@ -48,11 +48,19 @@ const showEmptyFields = (name, url) => {
   }
 };
 
+const scrollDown = () => {
+  let chatContainer = document.querySelector('.article-chat');
+  setTimeout(() => {
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  }, 100);
+};
+
 export {
   applyLoadingStrip,
   setUserServiceHeigth,
   setUserActionComponentHeigth,
   setChatArticleHeight,
   showEmptyFields,
-  cleareCreateChatFields
+  cleareCreateChatFields,
+  scrollDown
 }

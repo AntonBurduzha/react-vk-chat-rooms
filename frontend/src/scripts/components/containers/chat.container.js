@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react'
 import { connect } from 'react-redux'
 import { getUserData } from '../../api/login.api'
 import { getCurrentChatMsg, postCurrentChatMsg } from '../../api/chat.api'
-import { setUserActionComponentHeigth, setChatArticleHeight } from '../../api/common.api'
+import { setUserActionComponentHeigth, setChatArticleHeight, scrollDown } from '../../api/common.api'
 import { setVkUserData } from '../../actions/login.actions'
 import { setCurrentChatMsg, setCurrentChatMsgData } from '../../actions/chat.action'
 import ChatView from '../views/chat.view'
@@ -37,7 +37,6 @@ class ChatContainer extends Component {
     });
     leavedMembers.splice(removedMemberIndex, 1);
     this.setState({chatMembers: leavedMembers});
-    console.log(this.state.chatMembers);
   }
 
   sendMessage(msgData) {
@@ -68,6 +67,7 @@ class ChatContainer extends Component {
     this.state.socket.on('joined.members', this.showAddedMembers);
     this.state.socket.on('send.message', this.sendMessage);
     this.state.socket.on('leave.room');
+    scrollDown();
   }
 
   getInputedMessage(event){
