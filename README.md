@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/AntonBurduzha/vk_chat_rooms.svg?branch=master)](https://travis-ci.org/AntonBurduzha/vk_chat_rooms)
+[![Build Status](https://travis-ci.org/AntonBurduzha/react-vk-chat-rooms.svg?branch=master)](https://travis-ci.org/AntonBurduzha/react-vk-chat-rooms)
 
 #Simple realtime chat app based on VK API
 ###Install
@@ -8,6 +8,7 @@
 'chatroom'
 4. ```npm install```
 5. ```gulp build```
+
 ###Usage
 1. Run C:\mongodb\bin\mongod.exe
 2. ```npm run nodemon```
