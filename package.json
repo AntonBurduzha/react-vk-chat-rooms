@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "nodemon": "nodemon ./backend/bin/www"
+    "nodemon": "nodemon ./backend/bin/www",
+    "build": "gulp build",
+    "watch": "gulp watch"
   },
   "repository": {
     "type": "git",
